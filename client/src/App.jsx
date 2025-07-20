@@ -6,9 +6,12 @@ import Dashboard from "./pages/Dashboard";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import Projects from "./pages/Projects";
+import MainNav from "./components/MainNav";
+
 export default function App() {
   return (
     <BrowserRouter>
+      <MainNav />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
