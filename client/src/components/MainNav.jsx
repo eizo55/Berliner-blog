@@ -41,10 +41,7 @@ export default function MainNav() {
             <FaMoon />
           </Button>
           <Link>
-            <Button
-              className="bg-gradient-to-r from-purple-500 to-blue-500"
-              color="gray"
-            >
+            <Button color="gray" className="dark:bg-white" outline>
               Sign In
             </Button>
           </Link>
