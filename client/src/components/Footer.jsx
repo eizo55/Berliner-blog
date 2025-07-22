@@ -26,7 +26,7 @@ export default function FooterComponent() {
               Blog
             </Link>
           </div>
-          <div className="grid grid-cols-2 gap-8 mt-3 sm:grid-cols-3 sm:gap-10 text-2xl">
+          <div className="grid grid-cols-2 gap-8 mt-3 sm:grid-cols-3 sm:gap-10 ">
             <div>
               {" "}
               <FooterTitle title="About" />
