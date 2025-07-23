@@ -6,11 +6,20 @@ import {
   NavbarCollapse,
   NavbarLink,
   NavbarToggle,
+  Dropdown,
+  Avatar,
+  DropdownHeader,
+  DropdownItem,
+  DropdownDivider,
 } from "flowbite-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa";
+import { useSelector } from "react-redux";
+
 export default function MainNav() {
+  const { currentUser } = useSelector((state) => state.user);
+
   const path = useLocation().pathname;
   const navigate = useNavigate();
   const navigateTo = (path) => {
@@ -44,16 +53,42 @@ export default function MainNav() {
           <Button className="w-12 h-10 hidden sm:inline" color="gray" pill>
             <FaMoon />
           </Button>
-          <Link>
-            <Button
-              color="gray"
-              className="dark:bg-white"
-              outline
-              onClick={() => navigateTo("/sign-in")}
-            >
-              Sign In
-            </Button>
-          </Link>
+
+          {currentUser ? (
+            <>
+              <Dropdown
+                arrowIcon={false}
+                inline
+                label={
+                  <Avatar alt="user" img={currentUser.profilePicture} rounded />
+                }
+              >
+                <DropdownHeader>
+                  <span className="block text-sm">@{currentUser.username}</span>
+                  <span className="block text-sm font-medium truncate">
+                    {currentUser.email}
+                  </span>
+                </DropdownHeader>
+                <Link to="/dashboard?tab=profile">
+                  <DropdownItem>Profile</DropdownItem>
+                </Link>
+                <DropdownDivider />
+                <DropdownItem>Sign Out</DropdownItem>
+              </Dropdown>
+            </>
+          ) : (
+            <Link>
+              <Button
+                color="gray"
+                className="dark:bg-white"
+                outline
+                onClick={() => navigateTo("/sign-in")}
+              >
+                Sign In
+              </Button>
+            </Link>
+          )}
+
           <NavbarToggle />
         </div>
         <NavbarCollapse>
