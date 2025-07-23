@@ -7,11 +7,15 @@ import {
   NavbarLink,
   NavbarToggle,
 } from "flowbite-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon } from "react-icons/fa";
 export default function MainNav() {
   const path = useLocation().pathname;
+  const navigate = useNavigate();
+  const navigateTo = (path) => {
+    navigate(path);
+  };
 
   return (
     <div>
@@ -41,7 +45,12 @@ export default function MainNav() {
             <FaMoon />
           </Button>
           <Link>
-            <Button color="gray" className="dark:bg-white" outline>
+            <Button
+              color="gray"
+              className="dark:bg-white"
+              outline
+              onClick={() => navigateTo("/sign-in")}
+            >
               Sign In
             </Button>
           </Link>
