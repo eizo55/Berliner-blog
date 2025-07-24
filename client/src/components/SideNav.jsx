@@ -33,6 +33,7 @@ export default function SideNav() {
               icon={HiUser}
               label={"User"}
               labelColor="dark"
+              as="div"
             >
               Profile
             </SidebarItem>
