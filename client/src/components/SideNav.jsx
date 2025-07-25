@@ -8,12 +8,31 @@ import {
   SidebarItems,
 } from "flowbite-react";
 import { HiUser, HiArrowSmRight } from "react-icons/hi";
+import { signOutSuccess } from "../redux/user/userSlice";
+import { useDispatch } from "react-redux";
 
 import React from "react";
 
 export default function SideNav() {
   const location = useLocation();
+  const dispatch = useDispatch();
   const [tab, setTab] = useState("");
+
+  const handleSignout = async () => {
+    try {
+      const res = await fetch(`/api/user/signout`, {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signOutSuccess());
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   useEffect(() => {
     const urlParams = new URLSearchParams(location.search);
@@ -38,7 +57,11 @@ export default function SideNav() {
               Profile
             </SidebarItem>
           </Link>
-          <SidebarItem icon={HiArrowSmRight} className="cursor-pointer">
+          <SidebarItem
+            icon={HiArrowSmRight}
+            className="cursor-pointer"
+            onClick={handleSignout}
+          >
             Sign Out
           </SidebarItem>
         </SidebarItemGroup>

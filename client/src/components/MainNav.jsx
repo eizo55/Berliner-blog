@@ -17,6 +17,7 @@ import { AiOutlineSearch } from "react-icons/ai";
 import { FaMoon, FaSun } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleTheme } from "../redux/theme/themeSlice";
+import { signOutSuccess } from "../redux/user/userSlice";
 
 export default function MainNav() {
   const { currentUser } = useSelector((state) => state.user);
@@ -26,6 +27,22 @@ export default function MainNav() {
   const navigate = useNavigate();
   const navigateTo = (path) => {
     navigate(path);
+  };
+
+  const handleSignout = async () => {
+    try {
+      const res = await fetch(`/api/user/signout`, {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signOutSuccess());
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
   };
 
   return (
@@ -80,7 +97,7 @@ export default function MainNav() {
                   <DropdownItem>Profile</DropdownItem>
                 </Link>
                 <DropdownDivider />
-                <DropdownItem>Sign Out</DropdownItem>
+                <DropdownItem onClick={handleSignout}>Sign Out</DropdownItem>
               </Dropdown>
             </>
           ) : (

@@ -15,6 +15,7 @@ import {
   deleteUserFailure,
   deleteUserStart,
   deleteUserSucess,
+  signOutSuccess,
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
@@ -102,6 +103,22 @@ export default function Profile() {
     }
   };
 
+  const handleSignout = async () => {
+    try {
+      const res = await fetch(`/api/user/signout`, {
+        method: "POST",
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        console.log(data.message);
+      } else {
+        dispatch(signOutSuccess());
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
@@ -159,13 +176,17 @@ export default function Profile() {
         />
         <Button
           type="submit"
-          className="bg-gradient-to-br from-purple-500 to-blue-500"
+          className=" cursor-pointer bg-gradient-to-br from-purple-500 to-blue-500"
         >
           Update
         </Button>
         <div className="text-red-500 flex justify-between ">
-          <span onClick={() => setShowModal(true)}>Delete Account</span>
-          <span>Sign Out</span>
+          <span className="cursor-pointer" onClick={() => setShowModal(true)}>
+            Delete Account
+          </span>
+          <span className="cursor-pointer" onClick={handleSignout}>
+            Sign Out
+          </span>
         </div>
       </form>
       {updateUserSuccess && (
