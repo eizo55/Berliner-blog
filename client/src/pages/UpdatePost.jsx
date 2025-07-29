@@ -32,9 +32,8 @@ export default function UpdatePost() {
       }
 
       if (res.ok) {
-        console.log("Alles gut");
         setPublishError(null);
-        navigate(`/post${data.slug}`);
+        navigate(`/post/${data.slug}`);
       }
     } catch (error) {
       setPublishError("something went wrong");

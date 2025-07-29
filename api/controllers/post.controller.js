@@ -47,7 +47,7 @@ export const getposts = async (req, res, next) => {
       .sort({ updatedAt: sortDirection })
       .skip(startIndex)
       .limit(limit);
-    console.log("log 2");
+
     const totalPosts = await Post.countDocuments();
 
     const now = new Date();
@@ -81,22 +81,30 @@ export const deletepost = async (req, res, next) => {
 };
 
 export const updatepost = async (req, res, next) => {
-  if (!req.user.isAdmin || req.user.id !== req.params.userId) {
-    return next(errorHandler(403, "You are not allowed to delete this post!"));
+  const { postId, userId } = req.params;
+
+  if (!req.user.isAdmin && req.user.id !== userId) {
+    return next(errorHandler(403, "You are not allowed to update this post!"));
   }
+
   try {
     const updatedPost = await Post.findByIdAndUpdate(
-      req.params.postId,
+      postId,
       {
         $set: {
           title: req.body.title,
           content: req.body.content,
           category: req.body.category,
-          imagE: req.body.image,
+          image: req.body.image,
         },
       },
       { new: true }
     );
+
+    if (!updatedPost) {
+      return next(errorHandler(404, "Post not found."));
+    }
+
     res.status(200).json(updatedPost);
   } catch (error) {
     next(error);
