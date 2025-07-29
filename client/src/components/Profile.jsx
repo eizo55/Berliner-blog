@@ -19,9 +19,10 @@ import {
 } from "../redux/user/userSlice";
 import { useDispatch } from "react-redux";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
+import { Link } from "react-router-dom";
 
 export default function Profile() {
-  const { currentUser, error } = useSelector((state) => state.user);
+  const { currentUser, error, loading } = useSelector((state) => state.user);
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
   const [formData, setFormData] = useState({});
@@ -177,9 +178,21 @@ export default function Profile() {
         <Button
           type="submit"
           className=" cursor-pointer bg-gradient-to-br from-purple-500 to-blue-500"
+          disabled={loading}
         >
-          Update
+          {loading ? "Loading..." : "Update"}
         </Button>
+        {currentUser.isAdmin && (
+          <Link to="/create-post">
+            <Button
+              type="submit"
+              className=" cursor-pointer bg-gradient-to-br from-pink-500 to-purple-500 w-full"
+            >
+              Create a post
+            </Button>
+          </Link>
+        )}
+
         <div className="text-red-500 flex justify-between ">
           <span className="cursor-pointer" onClick={() => setShowModal(true)}>
             Delete Account

@@ -101,13 +101,8 @@ export default function MainNav() {
               </Dropdown>
             </>
           ) : (
-            <Link>
-              <Button
-                color="gray"
-                className="dark:bg-white"
-                outline
-                onClick={() => navigateTo("/sign-in")}
-              >
+            <Link to="/sign-in">
+              <Button color="gray" className="dark:bg-white" outline>
                 Sign In
               </Button>
             </Link>

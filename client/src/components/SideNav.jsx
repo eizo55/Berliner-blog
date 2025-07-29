@@ -7,9 +7,9 @@ import {
   SidebarItemGroup,
   SidebarItems,
 } from "flowbite-react";
-import { HiUser, HiArrowSmRight } from "react-icons/hi";
+import { HiUser, HiArrowSmRight, HiDocumentText } from "react-icons/hi";
 import { signOutSuccess } from "../redux/user/userSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import React from "react";
 
@@ -17,6 +17,7 @@ export default function SideNav() {
   const location = useLocation();
   const dispatch = useDispatch();
   const [tab, setTab] = useState("");
+  const { currentUser } = useSelector((state) => state.user);
 
   const handleSignout = async () => {
     try {
@@ -50,13 +51,25 @@ export default function SideNav() {
               className="mb-2"
               active={tab === "profile"}
               icon={HiUser}
-              label={"User"}
+              label={currentUser.isAdmin ? "Admin" : "User"}
               labelColor="dark"
               as="div"
             >
               Profile
             </SidebarItem>
           </Link>
+          {currentUser.isAdmin && (
+            <Link to="/dashboard?tab=posts">
+              <SidebarItem
+                className="mb-2"
+                active={tab === "posts"}
+                icon={HiDocumentText}
+                as="div"
+              >
+                Posts
+              </SidebarItem>
+            </Link>
+          )}
           <SidebarItem
             icon={HiArrowSmRight}
             className="cursor-pointer"

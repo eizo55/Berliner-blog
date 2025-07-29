@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import SideNav from "../components/SideNav";
 import Profile from "../components/Profile";
+import Post from "../components/Post";
 
 export default function Dashboard() {
   const location = useLocation();
@@ -20,6 +21,7 @@ export default function Dashboard() {
         <SideNav />
       </div>
       {tab === "profile" && <Profile />}
+      {tab === "posts" && <Post />}
     </div>
   );
 }
