@@ -7,7 +7,12 @@ import {
   SidebarItemGroup,
   SidebarItems,
 } from "flowbite-react";
-import { HiUser, HiArrowSmRight, HiDocumentText } from "react-icons/hi";
+import {
+  HiUser,
+  HiArrowSmRight,
+  HiDocumentText,
+  HiOutlineUserGroup,
+} from "react-icons/hi";
 import { signOutSuccess } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -67,6 +72,18 @@ export default function SideNav() {
                 as="div"
               >
                 Posts
+              </SidebarItem>
+            </Link>
+          )}
+          {currentUser.isAdmin && (
+            <Link to="/dashboard?tab=users">
+              <SidebarItem
+                className="mb-2"
+                active={tab === "posts"}
+                icon={HiOutlineUserGroup}
+                as="div"
+              >
+                Users
               </SidebarItem>
             </Link>
           )}
