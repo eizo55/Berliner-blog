@@ -4,6 +4,7 @@ import SideNav from "../components/SideNav";
 import Profile from "../components/Profile";
 import Post from "../components/Post";
 import UsersDashboard from "../components/UsersDashboard";
+import CommentsDashboard from "../components/CommentsDashboard";
 
 export default function Dashboard() {
   const location = useLocation();
@@ -24,6 +25,7 @@ export default function Dashboard() {
       {tab === "profile" && <Profile />}
       {tab === "posts" && <Post />}
       {tab === "users" && <UsersDashboard />}
+      {tab === "comments" && <CommentsDashboard />}
     </div>
   );
 }

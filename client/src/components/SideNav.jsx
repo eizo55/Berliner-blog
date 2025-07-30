@@ -12,6 +12,7 @@ import {
   HiArrowSmRight,
   HiDocumentText,
   HiOutlineUserGroup,
+  HiAnnotation,
 } from "react-icons/hi";
 import { signOutSuccess } from "../redux/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -79,11 +80,23 @@ export default function SideNav() {
             <Link to="/dashboard?tab=users">
               <SidebarItem
                 className="mb-2"
-                active={tab === "posts"}
+                active={tab === "users"}
                 icon={HiOutlineUserGroup}
                 as="div"
               >
                 Users
+              </SidebarItem>
+            </Link>
+          )}
+          {currentUser.isAdmin && (
+            <Link to="/dashboard?tab=comments">
+              <SidebarItem
+                className="mb-2"
+                active={tab === "comments"}
+                icon={HiAnnotation}
+                as="div"
+              >
+                Comments
               </SidebarItem>
             </Link>
           )}
