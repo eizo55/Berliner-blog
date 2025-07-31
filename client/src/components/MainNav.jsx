@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Navbar,
@@ -20,11 +20,14 @@ import { toggleTheme } from "../redux/theme/themeSlice";
 import { signOutSuccess } from "../redux/user/userSlice";
 
 export default function MainNav() {
-  const { currentUser } = useSelector((state) => state.user);
-  const dispatch = useDispatch();
-  const { theme } = useSelector((state) => state.theme);
-  const path = useLocation().pathname;
+  const location = useLocation();
+  const path = location.pathname;
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { currentUser } = useSelector((state) => state.user);
+  const { theme } = useSelector((state) => state.theme);
+  const [searchTerm, setSearchTerm] = useState("");
+
   const navigateTo = (path) => {
     navigate(path);
   };
@@ -45,6 +48,23 @@ export default function MainNav() {
     }
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("searchterm", searchTerm);
+    const searchQuery = urlParams.toString();
+    navigate(`/search?${searchQuery}`);
+  };
+
+  useEffect(() => {
+    console.log("location.search is:", location.search);
+    const urlParams = new URLSearchParams(location.search);
+    const searchTermFromUrl = urlParams.get("searchterm");
+    if (searchTermFromUrl) {
+      setSearchTerm(searchTermFromUrl);
+    }
+    console.log("URL search term:", searchTermFromUrl);
+  }, [location.search]);
   return (
     <div>
       <Navbar className="border-b-2">
@@ -57,12 +77,14 @@ export default function MainNav() {
           </span>
           Blog
         </Link>
-        <form>
+        <form onSubmit={handleSubmit}>
           <TextInput
             type="text"
             placeholder="Search..."
             rightIcon={AiOutlineSearch}
             className="hidden lg:inline"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </form>
         <Button className="w-12 h-10 lg:hidden" color="gray" pill>
