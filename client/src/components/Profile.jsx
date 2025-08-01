@@ -29,15 +29,44 @@ export default function Profile() {
   const [updateUserSuccess, setUpdateUserSuccess] = useState(null);
   const [updateUserFailure, setUpdateUserFaliure] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   const fileSelectorRef = useRef();
   const dispatch = useDispatch();
 
-  const handleImageChange = (e) => {
+  const handleImageChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      setImageFile(file);
-      setImageFileUrl(URL.createObjectURL(file));
+    if (!file) return;
+
+    setUploadingImage(true);
+    setImageFileUrl(null); // Optional: clear existing image during upload
+
+    const data = new FormData();
+    data.append("file", file);
+    data.append("upload_preset", "Berliner_blog");
+
+    try {
+      const res = await fetch(
+        "https://api.cloudinary.com/v1_1/dxcdq06uk/image/upload",
+        {
+          method: "POST",
+          body: data,
+        }
+      );
+
+      const dataFromApi = await res.json();
+
+      if (res.ok) {
+        setImageFile(file);
+        setImageFileUrl(dataFromApi.secure_url);
+        setFormData({ ...formData, profilePicture: dataFromApi.secure_url });
+      } else {
+        console.error("Upload error:", dataFromApi);
+      }
+    } catch (error) {
+      console.error("Cloudinary error:", error);
+    } finally {
+      setUploadingImage(false);
     }
   };
 
@@ -135,7 +164,7 @@ export default function Profile() {
       {" "}
       <h1 className="ml-4 my-7 font-semibold text-3xl">Profile</h1>
       <form
-        className="flex flex-col gap-5 max-w-xl self-center mx-auto"
+        className="flex flex-col gap-6 max-w-xl self-center mx-auto"
         onSubmit={handleSubmit}
       >
         <input
@@ -146,15 +175,20 @@ export default function Profile() {
           hidden
         />
         <div
-          className="w-36 h-36 self-center cursor-pointer shadow-md overflow-hidden rounded-full"
+          className="w-36 h-36 self-center cursor-pointer shadow-md overflow-hidden rounded-full flex items-center justify-center bg-gray-100"
           onClick={() => fileSelectorRef.current.click()}
         >
-          <img
-            src={imageFileUrl || currentUser.profilePicture}
-            alt="user"
-            className="rounded-full w-full h-full border-6 object-cover border-[lightgray]"
-          />
+          {uploadingImage ? (
+            <div className="animate-spin rounded-full h-10 w-10 border-t-4 border-blue-500 border-solid"></div>
+          ) : (
+            <img
+              src={imageFileUrl || currentUser.profilePicture}
+              alt="user"
+              className="rounded-full w-full h-full border-6 object-cover border-[lightgray]"
+            />
+          )}
         </div>
+
         <TextInput
           type="text"
           id="username"
@@ -177,7 +211,7 @@ export default function Profile() {
         />
         <Button
           type="submit"
-          className=" cursor-pointer bg-gradient-to-br from-purple-500 to-blue-500"
+          className=" bg-gradient-to-br from-purple-500 to-blue-500 hover:from-blue-700 hover:to-purple-700 cursor-pointer"
           disabled={loading}
         >
           {loading ? "Loading..." : "Update"}
@@ -186,7 +220,7 @@ export default function Profile() {
           <Link to="/create-post">
             <Button
               type="submit"
-              className=" cursor-pointer bg-gradient-to-br from-pink-500 to-purple-500 w-full"
+              className=" bg-gradient-to-br from-pink-500 to-purple-500 w-full hover:from-purple-700 hover:to-pink-700 cursor-pointer"
             >
               Create a post
             </Button>
@@ -194,10 +228,16 @@ export default function Profile() {
         )}
 
         <div className="text-red-500 flex justify-between ">
-          <span className="cursor-pointer" onClick={() => setShowModal(true)}>
+          <span
+            className="cursor-pointer hover:underline"
+            onClick={() => setShowModal(true)}
+          >
             Delete Account
           </span>
-          <span className="cursor-pointer" onClick={handleSignout}>
+          <span
+            className="cursor-pointer hover:underline"
+            onClick={handleSignout}
+          >
             Sign Out
           </span>
         </div>

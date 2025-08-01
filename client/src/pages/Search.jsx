@@ -29,13 +29,22 @@ export default function Search() {
       setSideBarData({ ...sideBarData, category: category });
     }
   };
-
+  const urlParams = new URLSearchParams(location.search);
   const handleSubmit = (e) => {
     e.preventDefault();
     const urlParams = new URLSearchParams(location.search);
-    urlParams.set("searchterm", sideBarData.searchterm);
-    urlParams.set("sort", sideBarData.sort);
-    urlParams.set("category", sideBarData.category);
+    if (sideBarData.searchterm) {
+      urlParams.set("searchterm", sideBarData.searchterm);
+    }
+    if (sideBarData.sort) {
+      urlParams.set("sort", sideBarData.sort);
+    }
+    if (sideBarData.category && sideBarData.category !== "uncategorized") {
+      urlParams.set("category", sideBarData.category);
+    }
+    if (sideBarData.category === "uncategorized") {
+      urlParams.delete("category");
+    }
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
   };
@@ -93,13 +102,13 @@ export default function Search() {
       }
     };
     fetchPosts();
-  }, [location.s]);
+  }, [location.search]);
 
   return (
     <div className="flex flex-col md:flex-row">
       <div className="p-7 border-b md: border-r md:min-h-screen border-gray-500">
-        <form className="flex flex-col gap-8" onSubmit={handleSubmit}>
-          <div className="flex items-center gap-2">
+        <form className="flex flex-col gap-8 " onSubmit={handleSubmit}>
+          <div className="flex items-center justify-between gap-3">
             <label className="whitespace-nowrap font-semibold">
               Search Term:
             </label>
@@ -109,23 +118,30 @@ export default function Search() {
               type="text"
               value={sideBarData.searchterm}
               onChange={handleChange}
+              className="w-40"
             />
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 justify-between">
             <label className="whitespace-nowrap font-semibold">Sort: </label>
-            <Select onChange={handleChange} value={sideBarData.sort} id="sort">
+            <Select
+              onChange={handleChange}
+              value={sideBarData.sort}
+              id="sort"
+              className="w-40"
+            >
               <option value="desc">Latest</option>
               <option value="asc">oldest</option>
             </Select>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 justify-between">
             <label className="whitespace-nowrap font-semibold">Category:</label>
             <Select
               onChange={handleChange}
               value={sideBarData.category}
               id="category"
+              className="w-40"
             >
-              <option value="uncategorized">Uncategorized</option>
+              <option value="uncategorized">None</option>
               <option value="art">Art</option>
               <option value="music">Music</option>
               <option value="technology">Technology</option>
@@ -133,14 +149,14 @@ export default function Search() {
           </div>
           <Button
             type="submit"
-            className="bg-gradient-to-br from-purple-500 to-pink-500"
+            className="bg-gradient-to-br from-purple-500 to-pink-500 hover:from-pink-700 hover:to-purple-700 cursor-pointer"
           >
             Apply filters
           </Button>
         </form>
       </div>
       <div className="w-full">
-        <h1 className="text-3xl font-semibold sm:border-b border-gray-500 p-3 mt-5">
+        <h1 className="text-3xl font-semibold sm:border-b border-gray-500 p-3 mt-5 ml-3">
           Results:
         </h1>
         <div className="p-7 flex flex-wrap gap-4">

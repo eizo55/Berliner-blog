@@ -157,7 +157,7 @@ export default function CommentSection({ postId }) {
               {200 - comment.length} characters remaining
             </p>
             <Button
-              className="bg-gradient-to-br from-purple-500 to-blue-500"
+              className="bg-gradient-to-br from-purple-500 to-blue-500  hover:from-blue-700 hover:to-purple-700 cursor-pointer"
               type="submit"
             >
               Submit
@@ -207,13 +207,13 @@ export default function CommentSection({ postId }) {
             </h3>
             <div className="flex justify-center gap-4">
               <Button
-                className="bg-red-600"
+                className="bg-red-600 cursor-pointer"
                 onClick={() => handleDelete(commentToDelete)}
               >
                 Yes, I'm sure
               </Button>
               <Button
-                className="bg-gray-400"
+                className="bg-gray-400 cursor-pointer"
                 onClick={() => setShowModal(false)}
               >
                 No, cancel

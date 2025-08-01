@@ -9,7 +9,7 @@ export default function CallToAction() {
         <p className="text-gray-500 my-2">
           Check out these resources with 100 berlin events
         </p>
-        <Button className="rounded-tl-xl rounded-bl-none bg-gradient-to-br from-purple-500 to-pink-500">
+        <Button className="rounded-tl-xl rounded-bl-none bg-gradient-to-br from-purple-500 to-pink-500 hover:from-pink-700 hover:to-purple-700 cursor-pointer">
           <a
             href="https://www.berlin.de/events/"
             target="_blank"

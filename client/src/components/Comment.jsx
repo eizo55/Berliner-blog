@@ -80,7 +80,7 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
             <div className="flex justify-end gap-2 text-xs">
               <Button
                 type="button"
-                className="bg-gradient-to-br from-purple-500 to to-blue-500"
+                className="bg-gradient-to-br from-purple-500 to to-blue-500  hover:from-blue-700 hover:to-purple-700 cursor-pointer"
                 size="sm"
                 onClick={handleSave}
               >
@@ -88,7 +88,7 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
               </Button>
               <Button
                 type="button"
-                className=" bg-gradient-to-br from-purple-500 to to-blue-500"
+                className=" bg-gradient-to-br from-purple-500 to to-blue-500  hover:from-blue-700 hover:to-purple-700 cursor-pointer"
                 size="sm"
                 onClick={() => setIsEditing(false)}
               >
@@ -122,14 +122,14 @@ export default function Comment({ comment, onLike, onEdit, onDelete }) {
                   <button
                     onClick={handleEdit}
                     type="button"
-                    className="text-gray-400 hover:text-blue-500"
+                    className="text-gray-400 hover:text-blue-500 cursor-pointer"
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => onDelete(comment._id)}
                     type="button"
-                    className="text-gray-400 hover:text-red-500"
+                    className="text-gray-400 hover:text-red-500 cursor-pointer"
                   >
                     Delete
                   </button>

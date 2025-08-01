@@ -10,6 +10,14 @@ body {
 .ql-editor {
   font-size: 1.02rem;
 }
+.dark .quill p {
+  color: #ffffff; /* light text for dark mode */
+}
+
+.dark .ql-editor svg {
+  fill: #ffffff; /* make icons light in dark mode */
+}
+
 .post-content p {
   margin-bottom: 0.5rem;
 }

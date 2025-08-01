@@ -73,7 +73,7 @@ export default function MainNav() {
           className="self-center whitespace-nowrap text-sm sm:text-xl font-semibold dark:text-white"
         >
           <span className="px-2 py-1 bg-gradient-to-r from-indigo-500 via-primary-500 to-pink-500 rounded-lg text-white">
-            Berlin auf English
+            Berliner
           </span>
           Blog
         </Link>
@@ -90,14 +90,14 @@ export default function MainNav() {
         <Button className="w-12 h-10 lg:hidden" color="gray" pill>
           <AiOutlineSearch />
         </Button>
-        <div className="flex gap-2 md:order-2">
+        <div className="flex gap-4 md:order-2">
           <Button
-            className="w-12 h-10 hidden sm:inline"
+            className="w-10 h-10 sm:inline bg-white text-gray-700 border dark:hover:bg-white dark:hover:text-gray-700 hover:text-white dark:text-gray-300 cursor-pointer border-gray-700 flex items-center justify-center px-3"
             color="gray"
             pill
             onClick={() => dispatch(toggleTheme())}
           >
-            {theme === "light" ? <FaSun /> : <FaMoon />}
+            {theme === "light" ? <FaSun className="" /> : <FaMoon />}
           </Button>
 
           {currentUser ? (
@@ -106,7 +106,12 @@ export default function MainNav() {
                 arrowIcon={false}
                 inline
                 label={
-                  <Avatar alt="user" img={currentUser.profilePicture} rounded />
+                  <Avatar
+                    alt="user"
+                    img={currentUser.profilePicture}
+                    rounded
+                    className="transition-transform duration-200 hover:shadow-lg hover:scale-105 cursor-pointer"
+                  />
                 }
               >
                 <DropdownHeader>
