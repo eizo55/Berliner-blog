@@ -29,7 +29,7 @@ export default function Search() {
       setSideBarData({ ...sideBarData, category: category });
     }
   };
-  const urlParams = new URLSearchParams(location.search);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const urlParams = new URLSearchParams(location.search);
@@ -37,7 +37,7 @@ export default function Search() {
       urlParams.set("searchterm", sideBarData.searchterm);
     }
     if (sideBarData.sort) {
-      urlParams.set("sort", sideBarData.sort);
+      urlParams.set("order", sideBarData.sort);
     }
     if (sideBarData.category && sideBarData.category !== "uncategorized") {
       urlParams.set("category", sideBarData.category);
@@ -62,6 +62,7 @@ export default function Search() {
     if (res.ok) {
       const data = await res.json();
       if (data.posts.length === 9) {
+        setPosts((prevPosts) => [...prevPosts, ...data.posts]);
         setShowMore(true);
       } else {
         setShowMore(false);
@@ -94,7 +95,7 @@ export default function Search() {
         const data = await res.json();
         setPosts(data.posts);
         setLoading(false);
-        if (data.posts.length == 9) {
+        if (data.posts.length === 10) {
           setShowMore(false);
         } else {
           setShowMore(true);

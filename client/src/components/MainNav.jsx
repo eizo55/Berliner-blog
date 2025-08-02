@@ -129,7 +129,11 @@ export default function MainNav() {
             </>
           ) : (
             <Link to="/sign-in">
-              <Button color="gray" className="dark:bg-white" outline>
+              <Button
+                color="gray"
+                className="dark:bg-white cursor-pointer"
+                outline
+              >
                 Sign In
               </Button>
             </Link>
