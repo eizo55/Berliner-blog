@@ -10,8 +10,9 @@ import path from "path";
 
 dotenv.config();
 
-const URL = process.env.MONGO;
-
+const URL =
+  "mongodb+srv://Aziz22:FSDFSD2423DSA@cluster0.ohnxxgx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+console.log("MONGO URL:", URL);
 mongoose
   .connect(URL)
   .then(() => {
