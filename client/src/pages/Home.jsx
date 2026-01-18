@@ -16,9 +16,7 @@ export default function Home() {
   return (
     <div>
       <div className="flex flex-col gap-6 p-28  px-3 max-w-6xl mx-auto">
-        <h1 className="text-4xl font-bold lg:text:6xl">
-          Welcome to Berliner Blog{" "}
-        </h1>
+        <h1 className="text-4xl font-bold lg:text:6xl">Berliner Blog</h1>
         <p className="text-gray-500 text-sm sm:text-lg">
           your inside guide to life, culture, and everyday discoveries in
           Berlin, written from an international perspective.
